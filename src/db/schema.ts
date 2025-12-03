@@ -30,6 +30,7 @@ export const habits = pgTable('habits', {
   name: varchar('name', { length: 100 }).notNull(),
   description: text('description'),
   frequency: varchar('frequency', { length: 20 }).notNull(), // e.g., times per week
+  targetCount: integer('target_count').notNull().default(1),
   isActive: boolean('is_active').default(true).notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
@@ -57,12 +58,11 @@ export const habitTags = pgTable('habit_tags', {
   id: uuid('id').primaryKey().defaultRandom(),
   habitId: uuid('habit_id')
     .notNull()
-    .references(() => habits.id, { onDelete: 'cascade' })
-    .primaryKey(),
+    .references(() => habits.id, { onDelete: 'cascade' }),
+
   tagId: uuid('tag_id')
     .notNull()
-    .references(() => tags.id, { onDelete: 'cascade' })
-    .primaryKey(),
+    .references(() => tags.id, { onDelete: 'cascade' }),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 })
 // Define relations
@@ -106,6 +106,7 @@ export const habitTagRelations = relations(habitTags, ({ one }) => ({
 
 // Zod schemas for validation and type inference
 export type User = typeof users.$inferSelect
+export type NewUser = typeof users.$inferInsert
 export type Habit = typeof habits.$inferSelect
 export type Entry = typeof entries.$inferSelect
 export type Tag = typeof tags.$inferSelect
@@ -124,4 +125,4 @@ export const insertTagSchema = createInsertSchema(tags)
 export const selectTagSchema = createSelectSchema(tags)
 
 export const insertHabitTagSchema = createInsertSchema(habitTags)
-export const selectHabitTagSchema = createSelectSchema(habitTags) 
+export const selectHabitTagSchema = createSelectSchema(habitTags)
