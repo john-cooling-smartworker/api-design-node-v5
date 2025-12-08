@@ -9,6 +9,8 @@ const loginSchema = z.object({
   password: z.string().min(6, 'Password is required'),
 });
 
+
+
 // Example auth route - login
 router.post('/register', register)
 

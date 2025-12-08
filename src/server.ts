@@ -6,6 +6,7 @@ import cors from 'cors'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import { isTest } from '../env.ts'
+import { errorHandler } from './middleware/errorHandler.ts'
 
 
 // Middleware to parse JSON bodies
@@ -24,6 +25,7 @@ app.use(morgan('dev', {
 app.use('/api/v1/auth', authRoutes)
 app.use('/api/v1/users', userRoutes)
 app.use('/api/v1/habits', habitRoutes)
+ 
 
 // Health check endpoint - always good to have!
 app.get('/health', (req, res) => {
@@ -34,7 +36,7 @@ app.get('/health', (req, res) => {
   })
 
 })
-
+app.use(errorHandler)
 
 // Export the app for use in other modules (like tests)
 export { app }

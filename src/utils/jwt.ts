@@ -1,4 +1,4 @@
-import { SignJWT, type JWTPayload} from 'jose'
+import { SignJWT, jwtVerify, decodeJwt, type JWTPayload } from 'jose'
 import env from '../../env.ts'
 import { createSecretKey } from 'crypto'
 
@@ -15,7 +15,20 @@ export const generateToken = async (payload: JwtPayload) => {
   return new SignJWT(payload)
     .setProtectedHeader({ alg: 'HS256'  })
     .setIssuedAt()
-    .setExpirationTime(env.JWT_EXPIRES_IN)
+    .setExpirationTime(env.JWT_EXPIRES_IN || '7d')
     .sign(secretKey)
 
+}
+
+// Existing generateToken function...
+
+export const verifyToken = async (token: string): Promise<JwtPayload> => {
+  const secretKey = createSecretKey(env.JWT_SECRET, 'utf-8')
+  const { payload } = await jwtVerify(token, secretKey)
+
+  return {
+    id: payload.id as string,
+    email: payload.email as string,
+    username: payload.username as string,
+  }
 }

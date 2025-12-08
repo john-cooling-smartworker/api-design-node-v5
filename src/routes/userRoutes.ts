@@ -1,5 +1,9 @@
 import { Router } from "express";
+import { authenticateToken } from "../middleware/auth.ts";
+
 const router = Router();
+
+router.use(authenticateToken);
 
 // Example auth route - login
 router.get('/', (req, res) => {
@@ -19,6 +23,6 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   const { id } = req.params
   res.status(200).json({ message: `User with ID: ${id} deleted successfully!` })
-})  
+})
 
 export default router
