@@ -1,5 +1,5 @@
 import { db } from '../../../src/db/connection.ts'
-import { users, habits, entries, habitTags, type NewUser, type NewHabit } from '../../../src/db/schema.ts'
+import { users, habits, entries, habitTags, type NewUser, type NewHabit, tags } from '../../../src/db/schema.ts'
 import { hashPassword } from '../../../src/utils/passwords.ts'
 import { generateToken } from '../../../src/utils/jwt.ts'
 
@@ -61,4 +61,5 @@ export const cleanupDatabase = async () =>  {
   await db.delete(habits)
   await db.delete(users)
   await db.delete(habitTags)
+  await db.delete(tags)
 }

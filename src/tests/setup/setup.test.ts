@@ -4,8 +4,9 @@ import { createTestUser, createTestHabit, cleanupDatabase, } from "../helpers/db
 describe("Test Setup", () => {
 test("should create a test user", async () => {
   const { user, token } = await createTestUser();
+  console.log(`back from test user create ${JSON.stringify(user)}`);
 
-    expect(user).toBeDefined();
+  expect(user).toBeDefined();
   expect(token).toBeDefined();
   await cleanupDatabase
   })
