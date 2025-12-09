@@ -15,7 +15,7 @@
     "test:coverage": "cross-env APP_STAGE=test vitest run --coverage",
     "db:generate": "drizzle-kit generate",
     "db:push": "drizzle-kit push",
-    "db:migrate": "cross-env APP_STAGE=production drizzle-kit migrate",
+    "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "db:studio:test": "cross-env APP_STAGE=test drizzle-kit studio",
     "db:seed": "node src/db/seed.ts"
